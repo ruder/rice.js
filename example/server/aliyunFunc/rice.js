@@ -16,6 +16,7 @@ let config={
             ]
         }
     },
+    key:"123456",
     miniapp:{
         lib: require("../weixinFunc/node_modules/@ruder/miniapp")
     } 

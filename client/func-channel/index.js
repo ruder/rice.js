@@ -2,8 +2,8 @@
 var axois = require("uni-axios") 
 
 class Channel {
-    constructor(option) { 
-        this.serverUrl = (option.serverUrl + "/excute").replace(/[\/]+/ig,"/");  
+    constructor(serverUrl) { 
+        this.serverUrl = serverUrl;  
     }  
     
     request(params) { 

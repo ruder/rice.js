@@ -9,7 +9,7 @@ class Rice {
         this._init(actions);
     }
 
-    request(){
+    _request(){
         let body=this.params.parse(arguments);
         return this.channel.request(body);
     }
@@ -19,7 +19,7 @@ class Rice {
             this._loadActions(actions);
         else{
             // this._loadLocalActions();
-            this.request("grains.getAllActions").then((ms) => {
+            this._request("grains.getAllActions").then((ms) => {
                 for (var mName in ms) {
                     var actions = ms[mName];
                     actions.forEach(c => {
@@ -45,7 +45,7 @@ class Rice {
                 var params = [];
                 for (var i = 0; i < arguments.length; i++)
                     params.push(arguments[i]);
-                return this.request("grains.access", mName, aName, params)
+                return this._request("grains.access", mName, aName, params)
             }.bind(this);
         }
 

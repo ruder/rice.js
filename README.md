@@ -1,6 +1,6 @@
 # rice.js
 
-后端即前端的Javascript框架。让访问后端跟访问本地一样简单，支持所有javascript运行时，让javascript代码得到最大的复用。
+后端即前端的Javascript框架。让访问后端跟访问本地一样简单，支持所有javascript和Nodejs运行时，让javascript代码得到最大的复用。
 
 
 ### 访问示例
@@ -11,7 +11,7 @@
 
 // note/router.js
 
-module.exports={
+module.exports = {
     async test(user,message){
         return `${user.name} has a message: ${message}`
     }
@@ -22,7 +22,9 @@ module.exports={
 
 ```javascript
 
-let message=await rice.note.test({name:'ruder',sex:'dont know'},'hello')
+let user = {name:'ruder',sex:'dont know'}
+
+let message = await rice.note.test(user, 'hello')
 
 assert.areEqual(message,'ruder has a message: hello')
 

@@ -2,7 +2,7 @@ var AES = require("./aes");
 
 class Params{
     constructor(key){
-        if(key)  this.encrypt = new AES.Crypto(this.key); 
+        if(key)  this.encrypt = new AES.Crypto(key); 
     }
 
     parse(args){

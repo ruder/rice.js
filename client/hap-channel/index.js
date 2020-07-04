@@ -1,8 +1,9 @@
-//微信小程序
-var Fly=require("flyio/dist/npm/wx") 
-var fly=new Fly
+//快应用
+ var fetch = require("@system.fetch")
+ var Fly=require("flyio/dist/npm/hap")
+ var fly=new Fly(fetch)
 
-class WxChannel {
+class HapChannel {
     constructor(serverUrl) { 
         this.serverUrl = serverUrl;  
     }  
@@ -28,4 +29,4 @@ class WxChannel {
 
 
 
-module.exports = WxChannel
+module.exports = HapChannel

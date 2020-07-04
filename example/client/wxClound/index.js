@@ -1,4 +1,4 @@
-let Channel=require("../../../client/wx-channel")
+let Channel=require("../../../client/wx-cloud-channel")
 let Rice=require("../../../client/lib")
 let key="123456"
 

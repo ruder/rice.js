@@ -1,7 +1,8 @@
+//支付宝小程序
+var Fly=require("flyio/dist/npm/ap") 
+var fly=new Fly
 
-var axois = require("uni-axios") 
-
-class Channel {
+class ApChannel {
     constructor(serverUrl) { 
         this.serverUrl = serverUrl;  
     }  
@@ -9,8 +10,8 @@ class Channel {
     request(params) { 
         return new Promise((resolve, reject) => { 
             var path = this.serverUrl;    
-
-            axois.post(path, params)
+ 
+            fly.post(path, params)
                 .then(d => {
                     var data = d.data;
                     if (data.err)
@@ -27,4 +28,4 @@ class Channel {
 
 
 
-module.exports = Channel
+module.exports = ApChannel

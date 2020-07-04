@@ -6,9 +6,7 @@ const http = require('http');
 class HttpServer {
     constructor(rice, port) {
         this.rice = rice;
-        this.port = port; 
-
-        this.urlPath="excute"
+        this.port = port;  
     }
     listen() {
         var port = this.port;
@@ -37,7 +35,7 @@ class HttpServer {
                 limit: 1024 * 1024
             }))
             .use(compression())
-            .post('/' + this.urlPath, (req, res) => {
+            .post((req, res) => {
                 res.setHeader('Content-Type', "application/json");
                 this.response(req, res);
             })

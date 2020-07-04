@@ -1,8 +1,7 @@
-//微信小程序
-var Fly=require("flyio/dist/npm/wx") 
-var fly=new Fly
+//浏览器、Node、React Native
+var axios = require("axios")
 
-class WxChannel {
+class Channel {
     constructor(serverUrl) { 
         this.serverUrl = serverUrl;  
     }  
@@ -11,7 +10,7 @@ class WxChannel {
         return new Promise((resolve, reject) => { 
             var path = this.serverUrl;    
  
-            fly.post(path, params)
+            axios.post(path, params)
                 .then(d => {
                     var data = d.data;
                     if (data.err)
@@ -28,4 +27,4 @@ class WxChannel {
 
 
 
-module.exports = WxChannel
+module.exports = Channel

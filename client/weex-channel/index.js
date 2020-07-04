@@ -1,16 +1,17 @@
+//Weex
+var Fly=require("flyio/dist/npm/weex")
+var fly=new Fly
 
-var axois = require("uni-axios") 
-
-class HttpChannel {
+class WeexChannel {
     constructor(serverUrl) { 
-        this.serverUrl = (serverUrl + "/excute").replace(/[\/]+/ig,"/");  
+        this.serverUrl = serverUrl;  
     }  
     
     request(params) { 
         return new Promise((resolve, reject) => { 
             var path = this.serverUrl;    
-
-            axois.post(path, params)
+ 
+            fly.post(path, params)
                 .then(d => {
                     var data = d.data;
                     if (data.err)
@@ -27,4 +28,4 @@ class HttpChannel {
 
 
 
-module.exports = HttpChannel
+module.exports = WeexChannel

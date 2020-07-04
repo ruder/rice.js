@@ -1,8 +1,7 @@
-//微信小程序
-var Fly=require("flyio/dist/npm/wx") 
-var fly=new Fly
+//uni-app
+var uniAxois = require("uni-axios")  
 
-class WxChannel {
+class UniChannel {
     constructor(serverUrl) { 
         this.serverUrl = serverUrl;  
     }  
@@ -10,8 +9,8 @@ class WxChannel {
     request(params) { 
         return new Promise((resolve, reject) => { 
             var path = this.serverUrl;    
- 
-            fly.post(path, params)
+
+            uniAxois.post(path, params)
                 .then(d => {
                     var data = d.data;
                     if (data.err)
@@ -28,4 +27,4 @@ class WxChannel {
 
 
 
-module.exports = WxChannel
+module.exports = UniChannel

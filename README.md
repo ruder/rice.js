@@ -46,7 +46,7 @@ assert.areEqual(message,'ruder has a message: hello')
 <tr>
     <td rowspan="7">业务代码</td>
     <td>浏览器、Node、React Native</td>
-    <td rowspan="6">➤</td>
+    <td rowspan="6">-</td>
     <td rowspan="2">云服务器、docker</td>
     <td rowspan="7">业务代码</td>
 </tr>
@@ -69,7 +69,7 @@ assert.areEqual(message,'ruder has a message: hello')
 </tr> 
 <tr> 
     <td>微信云开发</td>
-    <td>➤</td>
+    <td>-</td>
     <td>微信云函数</td> 
 </tr>
 </table>

@@ -46,7 +46,7 @@ assert.areEqual(message,'ruder has a message: hello')
 <tr>
     <td rowspan="7">业务代码</td>
     <td>浏览器、Node、React Native</td>
-    <td rowspan="6">互通</td>
+    <td rowspan="6">➤</td>
     <td rowspan="2">云服务器、docker</td>
     <td rowspan="7">业务代码</td>
 </tr>
@@ -69,10 +69,10 @@ assert.areEqual(message,'ruder has a message: hello')
 </tr> 
 <tr> 
     <td>微信云开发</td>
-    <td></td>
+    <td>➤</td>
     <td>微信云函数</td> 
 </tr>
 </table>
 
-除了微信小程序访问微信云开发的云函数特殊，其它的前后端运行时可以互通
+微信云函数比较特殊，只能由微信云开发访问。其它后端运行时均支持其它前端运行时访问。
 

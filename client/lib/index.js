@@ -9,6 +9,30 @@ class Rice {
         this._init(actions);
     }
 
+    async wait(){
+        if(!this._inited){
+            await this._sleep(50)
+            await this.wait();
+        }
+    }
+
+    async get(key){
+        if(!this._inited){
+            await this._sleep(50)
+            let g=await this.getGrain(key);
+            return g
+        }
+
+        return this[key]  
+    }
+
+    _sleep(t){
+        return new Promise((resolve,reject)=>{
+            setTimeout(resolve,t)
+        })
+    }
+
+
     _request(){
         let body=this.params.parse(arguments);
         return this.channel.request(body);

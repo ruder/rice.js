@@ -22,9 +22,9 @@ module.exports={
 
 ```javascript
 
-let message=await rice.note.test({name:'ruder',sex:'dont know'},'Hei! Man! What do you want to do?')
+let message=await rice.note.test({name:'ruder',sex:'dont know'},'hello')
 
-assert.areEqual(message,'ruder has a message: Hei! Man! What do you want to do?')
+assert.areEqual(message,'ruder has a message: hello')
 
 ```
 

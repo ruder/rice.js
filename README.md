@@ -213,61 +213,7 @@ module.exports=Users
 ## 微信小程序云开发示例
 
 有一个环境比较特殊，就是微信小程序的云开发，客户端和服务端都是定制，无法跟其它共享。
-
-#### 客户端代码：
-
-同样，列出代码结构：
-```
-client
-    -- rice.js
-    -- app.js
-    -- pages
-        -- login
-            -- index.js
-```
-
-1，新建`rice.js`
-```javascript
-//rice.js 
-
-let Channel = require("@ricejs/client-wx-cloud-channel")
-let Rice = require("@ricejs/client")
-  
-let rice = Rice.create( new Channel(
-    "rice", //这是云函数名称
-    "default-db14325" //这是云开发环境Id。如果只有一个环境可以不填写
-    ))
  
-module.exports = rice;
-```
-2，在`app.js`更改`onLaunch`:
-```javascript
-//App.js  
-import rice from "./rice"
-App({
-    onLaunch: function () { 
-        rice.wait();
-        this.rice=rice; 
-    }
-})
-
-```
-3，在pages中的`pages/login/index.js`就可以这样使用：
-
-```javascript
-//pages/login/index.js
-const app = getApp()
-Page({
-    data: {}, 
-    onLoad: function() { 
-        app.rice.test.login().then(d=>{
-            console.log(d);
-        })
-    }
-});
-```
-
-
 #### 服务端代码
 
 服务端的代码结构
@@ -327,9 +273,58 @@ module.exports = {
       }
   } 
 }
+``` 
+
+
+#### 客户端代码：
+
+同样，列出代码结构：
 ```
-所以前端就可以通过
+client
+    -- rice.js
+    -- app.js
+    -- pages
+        -- login
+            -- index.js
 ```
-let data = await rice.test.login()
+
+1，新建`rice.js`
+```javascript
+//rice.js 
+
+let Channel = require("@ricejs/client-wx-cloud-channel")
+let Rice = require("@ricejs/client")
+  
+let rice = Rice.create( new Channel(
+    "rice", //这是云函数名称
+    "default-db14325" //这是云开发环境Id。如果只有一个环境可以不填写
+    ))
+ 
+module.exports = rice;
 ```
-取得服务端得到的用户`openid`。
+2，在`app.js`更改`onLaunch`:
+```javascript
+//App.js  
+import rice from "./rice"
+App({
+    onLaunch: function () { 
+        rice.wait();
+        this.rice=rice; 
+    }
+})
+
+```
+3，在pages中的`pages/login/index.js`就可以这样使用：
+
+```javascript
+//pages/login/index.js
+const app = getApp()
+Page({
+    data: {}, 
+    onLoad: function() { 
+        app.rice.test.login().then(d=>{
+            console.log(d);
+        })
+    }
+});
+```

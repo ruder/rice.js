@@ -1,4 +1,4 @@
-var jsonBody = require("../qcloud-func/node_modules/body/json") 
+var jsonBody = require("body/json") 
 
 let rootRice=null;
 

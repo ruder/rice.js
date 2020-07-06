@@ -26,7 +26,7 @@ class WxCloudChannel {
                 name: this.functionName,
                 data: params,
                 success: res => { 
-                    var data = JSON.stringify(res.result);
+                    var data = res.result;
                     if (data.err)
                         return reject(data.err)
                     return resolve(data.d);

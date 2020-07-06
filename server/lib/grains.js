@@ -134,7 +134,13 @@ class Grains {
             let mo = config.lib;
             if (typeof mo === "string"){
                 let mpath = config.lib || key;
-                mo = require(mpath) ||{}
+
+                try{
+                    mo = require(mpath)
+                }
+                catch(ex){
+                    mo={}
+                }
 
                 //默认的main
                 if(!mo.main)

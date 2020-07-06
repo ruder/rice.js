@@ -29,7 +29,7 @@ class Params{
                 parmas: this.encrypt.encrypt(encodeURI(new Date().getTime() + JSON.stringify(parmas)))
             } 
         
-        return {encrypt:"false",parmas}
+        return {encrypt:"false",parmas:JSON.stringify(parmas)}
 
     }
 }

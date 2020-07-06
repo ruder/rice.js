@@ -37,7 +37,7 @@ class HttpServer {
             .use(compression())
             .post((req, res) => {
                 res.setHeader('Content-Type', "application/json");
-                this.response(req, res);
+                this.rice.manager.response(req, res);
             })
             .listen(port).then(_ => {
                 console.log(`> rice-http-server on localhost:${port}`);

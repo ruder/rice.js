@@ -8,7 +8,7 @@ cloud.init({
 let rootRice=null;
 class WeixinFunc{
     constructor(rice){
-        this.rice=rice;
+        rootRice=rice;
     }
 
     async main(event, context) { 

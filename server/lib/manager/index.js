@@ -5,7 +5,7 @@ class Server {
     constructor(option) {
         option = option || {}; 
         this.moduleRootPath = option.moduleRootPath ; 
-        this.module = optoin.module;
+        this.module = option.module;
         this.key = option.key; 
 
         if(this.key) this.crypto = new AES.Crypto(this.key);
@@ -28,7 +28,7 @@ class Server {
                 }
                 str = str.substr(13);
             }
-
+ 
             var parmas = JSON.parse(str);
             var pns = parmas[0].split('.');
             var mname = pns.pop();

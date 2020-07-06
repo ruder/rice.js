@@ -1,11 +1,8 @@
-let rice=require("../../../server/lib")
+let rice=require("@ricejs/server")  
+let HttpServer = require("@ricejs/host-http-server")
 
-let Storage = require("../../../plugins/storage")
-let OTS = require("../../../plugins/ots")
-let config = require("./rice.js")
+let config = require("./rice.js") 
 
-let HttpServer = require("../../../server/http-server")
-
-rice.init(config,[OTS,Storage])
+rice.init(config)
 
 new HttpServer(rice,3000).listen();

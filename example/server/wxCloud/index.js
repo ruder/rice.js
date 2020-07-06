@@ -1,9 +1,7 @@
-let rice=require("../../../server/lib") 
-let Storage = require("../../../plugins/storage")
-let OTS = require("../../../plugins/ots")  
-let wxCloud = require("../../../server/wx-cloud") 
 
+let rice=require("@ricejs/server")  
+let wxCloud = require("@ricejs/host-wx-cloud")
 
 let config=require("./rice")
-rice.init(config,[OTS,Storage])
+rice.init(config)
 module.exports=new wxCloud(rice);

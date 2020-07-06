@@ -1,11 +1,6 @@
-let rice=require("../../../server/lib")
+let rice=require("@ricejs/server")  
+let AliyunFunc = require("@ricejs/host-aliyun-func")
 
-let Storage = require("../../../plugins/storage")
-let OTS = require("../../../plugins/ots")
 let config = require("./rice.js")
-
-let AliyunFunc = require("../../../server/aliyun-func")
-
-rice.init(config,[OTS,Storage])
-
+rice.init(config) 
 module.exports=new AliyunFunc(rice);

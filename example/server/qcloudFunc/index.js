@@ -1,11 +1,11 @@
-let rice=require("../../../server/lib")
+ 
 
-let Storage = require("../../../plugins/storage")
-let OTS = require("../../../plugins/ots")
-let config = require("./rice.js")
 
-let QcloudFunc = require("../../../server/qcloud-func")
+let rice=require("@ricejs/server")  
+let QcloudFunc = require("@ricejs/host-qcloud-func")
 
-rice.init(config,[OTS,Storage])
+let config = require("./rice.js") 
+
+rice.init(config)
 
 module.exports=new QcloudFunc(rice);

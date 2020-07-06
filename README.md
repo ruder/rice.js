@@ -79,7 +79,7 @@ assert.areEqual(message,'ruder has a message: hello')
 
 ## 开发示例
 
-除了微信云开发的环境，微信云开发的在末尾。
+这里列出除了`微信云开发`的其它环境的示例，`微信云开发`示例单列在最后面。
 
 ### 服务端代码
 
@@ -100,8 +100,8 @@ const path = require("path")
 const fs = require("fs");
 const rice=require("@ricejs/server")
 //这里host表示以下服务器运行环境
-// @ricejs/host-aliyun-func：阿里函数计算
-// @ricejs/host-qcloud-func：腾讯云函数
+// @ricejs/host-aliyun-func：阿里函数计算。详细参与 example/server/example/aliyunFunc
+// @ricejs/host-qcloud-func：腾讯云函数。详细参与 example/server/example/qcloudFunc
 // @ricejs/host-http-server：云服务器，docker  
 const httpServer = require("@ricejs/host-http-server")
 //配置文件，定义要业务模块及其相关配置

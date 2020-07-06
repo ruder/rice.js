@@ -215,6 +215,17 @@ module.exports=Users
 有一个环境比较特殊，就是微信小程序的云开发，客户端和服务端都是定制，无法跟其它共享。
 
 #### 客户端代码：
+
+同样，列出代码结构：
+```
+client
+    -- rice.js
+    -- app.js
+    -- pages
+        -- login
+            -- index.js
+```
+
 1，新建`rice.js`
 ```javascript
 //rice.js 
@@ -241,10 +252,10 @@ App({
 })
 
 ```
-3，在pages中的`index.js`就可以这样使用：
+3，在pages中的`pages/login/index.js`就可以这样使用：
 
 ```javascript
-//pages/index/index.js
+//pages/login/index.js
 const app = getApp()
 Page({
     data: {}, 
@@ -258,6 +269,15 @@ Page({
 
 
 #### 服务端代码
+
+服务端的代码结构
+```
+server
+    -- index.js
+    -- test
+        -- main.js
+        -- router.js
+```
 
 在云函数的`index.js`下的代码：
 ```javascript

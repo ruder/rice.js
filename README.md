@@ -94,7 +94,7 @@ let Rice = require("@ricejs/client")
   
 let rice = Rice.create( new Channel(
     "rice", //这是云函数名称
-    "default" //这是云开发环境
+    "default-db14325" //这是云开发环境Id。如果只有一个环境可以不填写
     ))
  
 module.exports = rice;

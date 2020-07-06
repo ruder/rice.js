@@ -132,8 +132,19 @@ class Grains {
                 return;
 
             let mo = config.lib;
-            if (typeof mo === "string")
-                mo = require(config.lib || key)
+            if (typeof mo === "string"){
+                let mpath = config.lib || key;
+                mo = require(mpath)
+
+                //默认的main
+                if(!mo.main)
+                    mo.main = require(mpath+"/main.js")
+                    
+                //默认的router
+                if(!mo.router)
+                    mo.router = require(mpath+"/router.js")
+
+            }
             if (!mo)
                 throw new Error(`模块${key}未载入失败，请使用npm i安装这个模块`);
 
@@ -180,17 +191,40 @@ class Grains {
         // 创建实体
         let main = new modu.main(ctx);
 
-        // 加载路由,路由的方法必须全是async
+        // 加载路由,路由的方法必须全是async 
+
         if (modu.router) {
-            let routers = fs.readdirSync(modu.router);
-            routers.forEach(actionStr => {
-                let action = require(path.join(modu.router, actionStr))
+
+            let actions=[];
+            //如果是单路由文件
+            if(typeof modu.router=="string" && modu.router.endsWith(".js")){
+                let action = require(modu.router)
+                actions.push(action)
+            }
+            //如果是路由文件夹
+            else if(typeof modu.router=="string" ){
+                let routers = fs.readdirSync(modu.router);
+                routers.forEach(actionStr => {
+                    //路由必须是js文件
+                    if(!actionStr.endsWith(".js"))
+                        return;
+                    let action = require(path.join(modu.router, actionStr))
+                    actions.push(action)
+                });
+            }
+            //默认路由对象：/router.js
+            else{
+                actions.push(modu.router)
+            }
+ 
+            actions.forEach(action => { 
                 var robjs = action
                 if (typeof action !== "object")
                     robjs = action(main)
 
                 this.routers[key] = this.routers[key] || {};
                 var nObj = this.routers[key];
+
                 for (var index in robjs) {
                     if (nObj[index])
                         throw new Error(`${key}模块的路由${actionStr}在方法${index}被重复定义！`)
@@ -248,30 +282,30 @@ class Grains {
         }
     }
 
-    __initStorage(ctx, modu, config) {
-        if (config.storage) {
-            let opts = this.config.storage || {};
-            if (typeof config.storage == "object")
-                opts = config.storage;
+    // __initStorage(ctx, modu, config) {
+    //     if (config.storage) {
+    //         let opts = this.config.storage || {};
+    //         if (typeof config.storage == "object")
+    //             opts = config.storage;
 
-            config.storage = opts;
-            opts = JSON.parse(JSON.stringify(opts));
-            opts.path = modu.storage
+    //         config.storage = opts;
+    //         opts = JSON.parse(JSON.stringify(opts));
+    //         opts.path = modu.storage
 
-            ctx.storage = new Storage(opts)
-        }
-    }
+    //         ctx.storage = new Storage(opts)
+    //     }
+    // }
 
-    __initOTS(ctx, modu, config) {
-        if (config.ots) {
-            let opts = this.config.ots || {};
-            if (typeof config.ots == "object")
-                opts = config.ots;
+    // __initOTS(ctx, modu, config) {
+    //     if (config.ots) {
+    //         let opts = this.config.ots || {};
+    //         if (typeof config.ots == "object")
+    //             opts = config.ots;
 
-            config.ots = opts;
-            ctx.ots = new OTS(JSON.parse(JSON.stringify(opts)));
-        }
-    }
+    //         config.ots = opts;
+    //         ctx.ots = new OTS(JSON.parse(JSON.stringify(opts)));
+    //     }
+    // }
 
     async _printModules() {
         var ms = await this.getAllActions();

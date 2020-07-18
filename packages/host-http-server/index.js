@@ -35,15 +35,20 @@ class HttpServer {
                 limit: 1024 * 1024
             }))
             .use(compression())
-            .post((req, res) => {
+            .post("/",async (req, res) => {
                 res.setHeader('Content-Type', "application/json");
-                this.rice.manager.response(req, res);
+                let result = await this.rice.manager.response(req.body); 
+                res.end(JSON.stringify(result))
+
             })
-            .listen(port).then(_ => {
-                console.log(`> rice-http-server on localhost:${port}`);
-            }).catch(error => {
-                console.error('rice-http-server启动失败:', error)
-            });
+            .listen(port)
+            
+            // .then(_ => {
+        console.log(`> rice-http-server on localhost:${port}`);
+            // }).catch(error => {
+            //     console.error('rice-http-server启动失败:', error)
+            // });
+        this.rice.start();
     }
 }
 

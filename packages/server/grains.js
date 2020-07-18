@@ -122,10 +122,13 @@ class Grains {
         this.config = configs._ || {};
         for (var key in configs) {
             //公共的
-            if (key === "_")
+            if (key === "_" )
                 continue;
 
             var config = configs[key];
+
+            if(typeof config!="object")
+                continue
 
             // 如果没有返回配置文件，则表示
             if (!config)

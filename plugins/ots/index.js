@@ -1,10 +1,10 @@
 
-var DB = require("ruder-ots")
+var DB = require("./db")
 
 var dbs = {};
 var GET_DB = function (opts) {
     var kys = {};
-    ["accessKeyId", "secretAccessKey", "endpoint", "apiVersion"].forEach(key => {
+    ["accessKeyId", "secretAccessKey", "endpoint", "apiVersion","instanceName"].forEach(key => {
         kys[key] = opts[key]
     })
     var key = JSON.stringify(kys).replace(/\s*/ig, "")
@@ -17,29 +17,38 @@ class OtsPool {
     constructor(opts) {
         this.opts = opts;
         this.instanceName = opts.instanceName;
+        //存放表格定义的路径
+        this.path = opts.path || "./"; 
+        if (this.path.length && this.path[this.path.length - 1] != "/")
+            this.path += "/"
+
+
         this.db = GET_DB(this.opts)
         this.dic = {};
     }
-    getDB(tableName) {
-        var name = (this.opts.prefix || '') + tableName;
-        var db = this.dic[name]
-        if (!db) {
-            db = new DB({ ots: this.db.ots.ots }, this.instanceName, name, this.opts.keys || ["id"]);
-            this.dic[name] = db;
+    getDB(tableName) { 
+        var table = this.dic[tableName]
+        if (!table) {
+            var name = (this.opts.prefix || '') + tableName;
+            try {
+                var gtConfig = require(this.path + tableName)
+            } catch (ex) {
+                throw new Error(`${tableName}数据表未定义！`)
+            }
+            table = this.db.getTable(name, gtConfig(DB));
+            this.dic[tableName] = table;
         }
-        return db;
+        return table;
     }
 }
 
 module.exports = OtsPool
 
-module.exports.init=(ctx, modu, config)=> {
-    if (config.ots) {
-        let opts = this.config.ots || {};
-        if (typeof config.ots == "object")
-            opts = config.ots;
+module.exports.init=(ctx, modu, config)=> { 
 
-        config.ots = opts;
-        ctx.ots = new OtsPool(JSON.parse(JSON.stringify(opts)));
+    if (config.ots) { 
+        opts = JSON.parse(JSON.stringify(config.ots));
+        opts.path = modu.ots 
+        ctx.ots = new OtsPool(opts)
     }
 }

@@ -134,6 +134,21 @@ class Grains {
             if (!config)
                 return;
 
+            //复用公共配置
+            for(let index in config){
+                if(!this.config[index])
+                    continue;
+                
+                if(typeof this.config[index]!="object")
+                    continue;
+
+                if(typeof config[index] !="object")
+                    config[index]={};
+                
+                config[index]=Object.assign({},this.config[index],config[index])
+            }
+
+
             let mo = config.lib;
             if (typeof mo === "string"){
                 let mpath = config.lib || key;

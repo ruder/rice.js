@@ -45,15 +45,9 @@ class Storage {
 }
 module.exports = Storage;
 module.exports.init = (ctx, modu, config)=> {
-    if (config.storage) {
-        let opts = this.config.storage || {};
-        if (typeof config.storage == "object")
-            opts = config.storage;
-
-        config.storage = opts;
-        opts = JSON.parse(JSON.stringify(opts));
-        opts.path = modu.storage
-
+    if (config.storage) { 
+        opts = JSON.parse(JSON.stringify(config.storag));
+        opts.path = modu.storage 
         ctx.storage = new Storage(opts)
     }
 }

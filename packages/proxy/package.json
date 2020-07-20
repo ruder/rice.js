@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "flyio": "^0.6.14"
+    "axios": "^0.19.0"
   },
   "gitHead": "9bd87708795ba7b95433744a196a2dbb72b86e42"
 }

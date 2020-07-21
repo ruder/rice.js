@@ -26,7 +26,7 @@ class OtsPool {
         this.db = GET_DB(this.opts)
         this.dic = {};
     }
-    getDB(tableName) { 
+    async getDB(tableName) { 
         var table = this.dic[tableName]
         if (!table) {
             var name = (this.opts.prefix || '') + tableName;
@@ -35,7 +35,7 @@ class OtsPool {
             } catch (ex) {
                 throw new Error(`${tableName}数据表未定义！`)
             }
-            table = this.db.getTable(name, gtConfig(DB));
+            table =await this.db.getTable(name, gtConfig(DB));
             this.dic[tableName] = table;
         }
         return table;
@@ -45,7 +45,7 @@ class OtsPool {
 module.exports = OtsPool
 
 module.exports.init=(ctx, modu, config)=> { 
-
+    
     if (config.ots) { 
         opts = JSON.parse(JSON.stringify(config.ots));
         opts.path = modu.ots 

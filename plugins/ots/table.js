@@ -26,14 +26,17 @@ class Table{
     }
 
     //查询
-    async get(id){
+    async get(id,columns){
         var params = {
             tableName: this.name,
-            primaryKey: [{ 'id': id }],
+            primaryKey: [{ 'id': id }], 
         };
+        if(columns){
+            params.columnsToGet = columns 
+        }
+
         let result = await this._excute("getRow",params) 
-        let obj=this._parseObject(result.row)
-        // console.log(obj);
+        let obj=this._parseObject(result.row) 
         return obj;    
     } 
 

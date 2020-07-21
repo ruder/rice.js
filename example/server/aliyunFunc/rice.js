@@ -17,8 +17,9 @@ let config={
         }
     },
     key:"123456",
-    miniapp:{
-        lib: "@ruder/miniapp"
+    test:{
+        lib: path.join(__dirname,"./test"),
+        ots:"_"
     } 
 }
  

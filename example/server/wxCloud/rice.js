@@ -16,8 +16,9 @@ let config={
             ]
         }
     },
-    miniapp:{
-        lib: require("@ruder/miniapp")
+    test:{
+        lib: path.join(__dirname,"./test"),
+        ots:"_"
     } 
 }
  

@@ -6,23 +6,31 @@ class Table{
         this.indexName=this.name+"_index"
         this.client=client;
         this.config=config;
+        this.enableIndex=!!config._index
+        this.enableCreate=!!config._create;
  
     }
 
     async init(){
+        //如果不用自动创建，则直接返回
+        if(!this.enableCreate)
+            return;
         // console.log("table.init")
         //判断表是否存在，不存在就建表
         let exist=await this._existTable();
         if(!exist){
             await this._createTable();
-            await this._craeteIndex();
+            if(this.enableIndex) await this._craeteIndex();
             return;
         }
        
-        //判断索引是否存在，不存在就建索引
-        let _existIndex=await this._existIndex();
-        if(!_existIndex)
-            await this._craeteIndex(); 
+        
+        if(this.enableIndex){
+            //判断索引是否存在，不存在就建索引
+            let _existIndex=await this._existIndex();
+            if(!_existIndex)
+                await this._craeteIndex(); 
+        }
     }
 
     //查询
@@ -40,7 +48,36 @@ class Table{
         return obj;    
     } 
 
+    async getList(from,to,limit=20,dasc=false,columns){
+ 
+        if(!from)
+            from=dasc?TableStore.INF_MAX:TableStore.INF_MIN
+        if(!to)
+            to=dasc?TableStore.INF_MIN:TableStore.INF_MAX
+
+        var params = {
+            tableName: this.name,
+            direction: TableStore.Direction.FORWARD,
+            inclusiveStartPrimaryKey: [{ "id": from }],
+            exclusiveEndPrimaryKey: [{ "id": to }],
+            limit: limit
+        };
+        if(dasc){
+            params.direction=TableStore.Direction.BACKWARD
+        }
+        if(columns){
+            params.columnsToGet = columns 
+        }
+
+        let result=await this._excute("getRange",params)
+        return result.rows.map(d=>this._parseObject(d));
+    }
+
     async search(where,columns,offset,limit,order){
+
+        if(!this.enableIndex)
+            throw {error:"Index_Is_Disabled",message:"多元索引未开放，需要在配置里定义_index:true"}
+
         let params={
             tableName: this.name,
             indexName: this.indexName,
@@ -107,6 +144,8 @@ class Table{
     }
 
     async getCount(where){
+        if(!this.enableIndex)
+        throw {error:"Index_Is_Disabled",message:"多元索引未开放，需要在配置里定义_index:true"}
        
         let params={
             tableName: this.name,

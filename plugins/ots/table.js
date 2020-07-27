@@ -174,6 +174,8 @@ class Table{
  
         let attr=[];
         for(let index in params){
+            if(index=="id")
+                continue;
             let v=params[index];
             if(this.config[index]==TableStore.FieldType.LONG)
                 v=Long.fromNumber(v)

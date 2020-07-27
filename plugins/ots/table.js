@@ -433,7 +433,7 @@ class Table{
  
     _parseObject(row){
         // console.log(row)
-        if(!row)
+        if(!row || !row.primaryKey)
             return undefined;
         
         let obj={} 

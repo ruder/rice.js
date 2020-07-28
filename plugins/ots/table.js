@@ -168,7 +168,7 @@ class Table{
  
 
     //增加&修改
-    async set(id,params){
+    async set2(id,params){
 
         var Long = TableStore.Long; 
  
@@ -203,6 +203,51 @@ class Table{
         let result = await this._excute("putRow",params) 
         return result; 
 
+    }
+
+    //更新
+    async set(id,params){
+        var Long = TableStore.Long; 
+  
+        let puts=[];
+        let deleteAlls=[];
+        for(let index in params){
+            if(index=="id")
+                continue;
+            let v=params[index];
+            if(v==undefined || v==null){
+                deleteAlls.push(index)
+                continue
+            }
+
+            if(this.config[index]==TableStore.FieldType.LONG)
+                v=Long.fromNumber(v)
+            let o={}
+            o[index]=v
+
+            puts.push(o)
+        }
+
+        let columns=[];
+        if(puts.length) columns.push({'PUT':puts})
+        else if(deleteAlls.length) columns.push({'DELETE_ALL': deleteAlls})
+
+        var params = {
+            tableName: this.name,
+            //不管此行是否已经存在，都会插入新数据，如果之前有会被覆盖。condition的详细使用说明，请参考conditionUpdateRow.js
+            condition: new TableStore.Condition(TableStore.RowExistenceExpectation.IGNORE, null),
+            primaryKey: [{ 'id': id }], 
+            // [
+            //     { 'PUT': [{ 'col4': Long.fromNumber(4) }, { 'col5': '5' }, { 'col6': Long.fromNumber(7) }] },
+            //     { 'DELETE': [{ 'col1': Long.fromNumber(1496826473186) }] },
+            //     { 'DELETE_ALL': ['col2'] }
+            // ],
+            updateOfAttributeColumns:columns,
+            returnContent: { returnType: TableStore.ReturnType.NONE }
+        }; 
+
+        let result = await this._excute("updateRow",params) 
+        return result
     }
 
     //删除

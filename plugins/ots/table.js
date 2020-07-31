@@ -35,6 +35,9 @@ class Table{
 
     //查询
     async get(id,columns){
+        if(!id)
+            return null;
+            
         var params = {
             tableName: this.name,
             primaryKey: [{ 'id': id }], 
